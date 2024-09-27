@@ -1,0 +1,59 @@
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import numpy as np
+
+# URLs dos dados
+url_oceanos = "https://docs.google.com/spreadsheets/d/163BLa3-HoUAS5S9WGWzsCs3uHlN0doRoRpJLdqGqeFg/export?format=csv&gid=74513691"
+url_florianopolis = "https://docs.google.com/spreadsheets/d/1eAqeKUoLeARua21E9O4p1WiiEbwsA6OjGXWVKxA-Yec/export?format=csv&gid=246036927"
+
+# Lendo os dados
+df_oceanos = pd.read_csv(url_oceanos)
+df_florianopolis = pd.read_csv(url_florianopolis)
+
+# Análise dos dados de Florianópolis
+fig_florianopolis = px.bar(df_florianopolis, x='Categoria', y='Quantidade (toneladas)', 
+                           title='Quantidade de Resíduos no Carnaval de Florianópolis',
+                           text='Quantidade (toneladas)', color='Categoria', 
+                           color_discrete_sequence=px.colors.sequential.Viridis)
+fig_florianopolis.update_traces(texttemplate='%{text:.2s}', textposition='outside')
+fig_florianopolis.update_layout(title_x=0.5, bargap=0.2)
+fig_florianopolis.show()
+
+# Análise dos dados de poluição plástica nos oceanos
+fig_oceanos = px.pie(df_oceanos, values='Porcentagem (%)', names='Subcategoria', 
+                     title='Percentual de Plásticos nos Oceanos', 
+                     color='Subcategoria', color_discrete_sequence=px.colors.sequential.Plasma)
+fig_oceanos.update_traces(textinfo='percent+label', textposition='inside')
+fig_oceanos.update_layout(
+    title_x=0.5,
+    width=700,  # Aumentando a largura em 50%
+    height=525  # Aumentando a altura em 50%
+)
+fig_oceanos.show()
+
+# Gráfico de linha e scatter para tendências históricas
+df_tendencias = pd.DataFrame({
+    'Ano': [2010, 2015, 2020, 2023],
+    'Resíduos Plásticos': [250, 300, 400, 500],
+    'Emissões de CO2': [200, 250, 300, 350]
+})
+
+fig_tendencias = go.Figure()
+fig_tendencias.add_trace(go.Scatter(x=df_tendencias['Ano'], y=df_tendencias['Resíduos Plásticos'], mode='lines+markers', name='Resíduos Plásticos'))
+fig_tendencias.add_trace(go.Scatter(x=df_tendencias['Ano'], y=df_tendencias['Emissões de CO2'], mode='lines+markers', name='Emissões de CO2'))
+fig_tendencias.update_layout(title='Tendências Históricas de Resíduos Plásticos e Emissões de CO2', 
+                             xaxis_title='Ano', yaxis_title='Quantidade', title_x=0.5)
+fig_tendencias.show()
+
+# Conclusão e recomendações
+conclusao = """
+**Conclusão:**
+
+Os dados analisados mostram que a poluição plástica é um problema global crítico, com Florianópolis enfrentando desafios semelhantes. É essencial adotar práticas mais sustentáveis, reduzir o uso de plásticos de uso único, e melhorar a gestão de resíduos. Propostas incluem:
+- Implementação de programas de reciclagem mais eficazes.
+- Educação e conscientização pública sobre os impactos do descarte inadequado de plásticos.
+- Incentivo à inovação em tecnologias de degradação e reutilização de plásticos.
+"""
+
+print(conclusao)
