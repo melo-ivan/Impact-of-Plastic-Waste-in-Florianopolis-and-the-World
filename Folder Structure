@@ -1,0 +1,21 @@
+impacto_residuos_plasticos/
+│
+├── data/
+│   ├── residuos_florianopolis.csv
+│   ├── poluicao_oceanos.csv
+│
+├── notebooks/
+│   ├── analise_residuos.ipynb
+│
+├── src/
+│   ├── main.py
+│
+├── results/
+│   ├── graficos/
+│   │   ├── florianopolis_bar_chart.png
+│   │   ├── oceanos_pie_chart.png
+│   │   └── tendencias_plot.png
+│
+├── .gitignore
+├── README.md
+└── LICENSE
